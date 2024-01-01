@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+public class aplikasipembeliantiket {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Input Kode Pembeli: ");
+            String kodePembeli = scanner.nextLine();
+            
+            System.out.print("Input Nama Pembeli: ");
+            String namaPembeli = scanner.nextLine();
+            
+            System.out.print("Input Kode Tujuan (A/B/C): ");
+            String kodeTujuan = scanner.nextLine();
+            
+            System.out.print("Input Jumlah Penumpang: ");
+            int jumlahPenumpang = scanner.nextInt();
+            
+            System.out.print("Input Status Penumpang (1 = VIP, 2 = Ekonomi): ");
+            int statusPenumpang = scanner.nextInt();
+            
+            System.out.print("Input Berat Bagasi (Kg): ");
+            double beratBagasi = scanner.nextDouble();
+            
+            // Proses perhitungan
+            double hargaTiket = 0;
+            String jenisTujuan = "";
+            
+            switch (kodeTujuan) {
+                case "A":
+                    jenisTujuan = "MKS-KENDARI";
+                    hargaTiket = 2_500_000;
+                    break;
+                case "B":
+                    jenisTujuan = "MKS-PALU";
+                    hargaTiket = 3_000_000;
+                    break;
+                case "C":
+                    jenisTujuan = "MKS-MANADO";
+                    hargaTiket = 3_500_000;
+                    break;
+                default:
+                    System.out.println("Kode Tujuan tidak valid.");
+                    scanner.close();
+                    return;
+            }
+            
+            double totalHargaTiket = jumlahPenumpang * hargaTiket;
+            
+            double diskonTiket = 0;
+            if (jumlahPenumpang >= 1 && jumlahPenumpang <= 3) {
+                diskonTiket = 0.01 * totalHargaTiket;
+            } else if (jumlahPenumpang >= 4 && jumlahPenumpang <= 6) {
+                diskonTiket = 0.02 * totalHargaTiket;
+            } else if (jumlahPenumpang >= 7) {
+                diskonTiket = 0.03 * totalHargaTiket;
+            }
+            
+            double hargaBagasi = 0;
+            if (beratBagasi >= 1 && beratBagasi <= 25) {
+                hargaBagasi = beratBagasi * 10_000;
+            } else if (beratBagasi >= 26) {
+                hargaBagasi = beratBagasi * 15_000;
+            }
+            
+            double totalBayar = totalHargaTiket - diskonTiket;
+            double pajakTiket = 0.05 * totalHargaTiket;
+            double hargaBersih = totalBayar + pajakTiket;
+            
+            // Menampilkan hasil
+            System.out.println("Kode Pembeli: " + kodePembeli);
+            System.out.println("Nama Pembeli: " + namaPembeli);
+            System.out.println("Kode Tujuan: " + kodeTujuan);
+            System.out.println("Jenis Tujuan: " + jenisTujuan);
+            System.out.println("Harga Tiket: Rp " + hargaTiket);
+            System.out.println("Jumlah Penumpang: " + jumlahPenumpang);
+            System.out.println("Status Penumpang: " + (statusPenumpang == 1 ? "VIP" : "Ekonomi"));
+            System.out.println("Total Harga Tiket: Rp " + totalHargaTiket);
+            System.out.println("Diskon Tiket: Rp " + diskonTiket);
+            System.out.println("Berat Bagasi: " + beratBagasi + " Kg");
+            System.out.println("Harga Bagasi: Rp " + hargaBagasi);
+            System.out.println("Total Bayar: Rp " + totalBayar);
+            System.out.println("Pajak Tiket: Rp " + pajakTiket);
+            System.out.println("Harga Bersih: Rp " + hargaBersih);
+        }
+    }
+}
